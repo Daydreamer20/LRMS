@@ -7,16 +7,13 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN node install-deps.js
 
 # Copy the rest of the application
 COPY . .
 
 # Set environment to production
 ENV NODE_ENV=production
-
-# Build the React app
-RUN npm run build
 
 # Verify build output and contents
 RUN echo "Verifying build directory..." && \
