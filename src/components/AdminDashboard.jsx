@@ -27,7 +27,7 @@ function AdminDashboard() {
           {/* Header Section */}
           <div className="text-center mb-10">
             <img 
-              src="https://imgur.com/a/lBOU8oE" 
+              src="https://i.imgur.com/kCdUi3n.png" 
               alt="DepEd Logo" 
               className="h-24 mx-auto mb-4"
             />
@@ -69,7 +69,7 @@ function AdminDashboard() {
         {/* Header */}
         <div className="text-center mb-10">
           <img 
-            src="https://imgur.com/a/lBOU8oE" 
+            src="https://i.imgur.com/kCdUi3n.png" 
             alt="DepEd Logo" 
             className="h-24 mx-auto mb-4"
           />

@@ -99,7 +99,7 @@ function AttendanceForm() {
         {/* Header Section */}
         <div className="text-center mb-10">
           <img 
-            src="https://imgur.com/kCdUi3n" 
+            src="https://i.imgur.com/kCdUi3n.png" 
             alt="DepEd Logo" 
             className="h-24 mx-auto mb-4"
           />
