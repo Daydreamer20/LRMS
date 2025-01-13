@@ -1,10 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import EventsList from './components/events/EventsList';
 import AdminLayout from './components/admin/AdminLayout';
 import EventManagement from './components/admin/EventManagement';
 import ParticipantManagement from './components/admin/ParticipantManagement';
 import RatingManagement from './components/admin/RatingManagement';
+import Registration from './components/auth/Registration';
+import RegistrationSuccess from './components/auth/RegistrationSuccess';
 
 function App() {
   return (
@@ -22,11 +24,23 @@ function App() {
             </header>
             <main>
               <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div className="text-center mb-8">
+                  <Link
+                    to="/register"
+                    className="inline-block bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
+                  >
+                    Register Now
+                  </Link>
+                </div>
                 <EventsList />
               </div>
             </main>
           </div>
         } />
+
+        {/* Auth Routes */}
+        <Route path="/register" element={<Registration />} />
+        <Route path="/registration-success" element={<RegistrationSuccess />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
