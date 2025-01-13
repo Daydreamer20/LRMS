@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import depedLogo from '../../assets/deped-logo.png';
-import lrmsLogo from '../../assets/lrms-logo.png';
+import depedLogo from '../../assets/deped-logo.svg';
+import lrmsLogo from '../../assets/lrms-logo.svg';
 
 function Login() {
   const navigate = useNavigate();
