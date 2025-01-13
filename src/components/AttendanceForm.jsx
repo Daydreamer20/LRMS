@@ -94,148 +94,142 @@ function AttendanceForm() {
   };
 
   return (
-    <div className="form-container py-12 px-4 sm:px-6 lg:px-8 animate-fade-in">
-      <div className="max-w-2xl mx-auto form-card bg-white rounded-xl overflow-hidden">
-        {/* Enhanced Header Section */}
-        <div className="form-header p-8 text-white">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
-            Learning Resource Evaluator
-          </h2>
-          <p className="text-center text-blue-100 text-lg">
-            Registration Form
-          </p>
-          <div className="mt-4 text-sm text-center text-blue-100">
-            Please complete all required fields marked with an asterisk (*)
+    <div className="min-h-screen bg-[#f8fafc] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-xl mx-auto">
+        {/* Logo and Title */}
+        <div className="text-center mb-8">
+          <div className="bg-[#ff6b35] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
           </div>
+          <h2 className="text-3xl font-bold text-gray-900">Online Registration</h2>
         </div>
 
-        {/* Enhanced Form Section */}
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          {/* Full Name */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
-              Full Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your full name"
-            />
-            {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
-            )}
-          </div>
+        {/* Form Card */}
+        <div className="bg-white rounded-2xl shadow-sm p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Full Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
+                placeholder="Enter your full name"
+              />
+              {errors.fullName && (
+                <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
+              )}
+            </div>
 
-          {/* Region and Division with enhanced styling */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
-              Region and Division <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              name="regionDivision"
-              value={formData.regionDivision}
-              onChange={handleChange}
-              className="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="e.g., Region IV-A CALABARZON"
-            />
-            {errors.regionDivision && (
-              <p className="text-red-500 text-sm mt-1">{errors.regionDivision}</p>
-            )}
-          </div>
+            {/* Region and Division */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Region and Division
+              </label>
+              <input
+                type="text"
+                name="regionDivision"
+                value={formData.regionDivision}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
+                placeholder="e.g., Region IV-A CALABARZON"
+              />
+              {errors.regionDivision && (
+                <p className="mt-1 text-sm text-red-500">{errors.regionDivision}</p>
+              )}
+            </div>
 
-          {/* Two Column Layout with enhanced styling */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Evaluation Area */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">
-                Area of Evaluation <span className="text-red-500">*</span>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Area of Evaluation
               </label>
               <select
                 name="evaluationArea"
                 value={formData.evaluationArea}
                 onChange={handleChange}
-                className="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
               >
                 <option value="">Select Area</option>
                 <option value="1">Area 1: Curriculum Compliance</option>
                 <option value="3">Area 3: Instructional Design</option>
               </select>
               {errors.evaluationArea && (
-                <p className="text-red-500 text-sm mt-1">{errors.evaluationArea}</p>
+                <p className="mt-1 text-sm text-red-500">{errors.evaluationArea}</p>
               )}
             </div>
 
             {/* Grade Level */}
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">
-                Grade Level <span className="text-red-500">*</span>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Grade Level
               </label>
               <select
                 name="gradeLevel"
                 value={formData.gradeLevel}
                 onChange={handleChange}
-                className="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
               >
                 <option value="">Select Grade</option>
                 <option value="5">Grade 5</option>
                 <option value="8">Grade 8</option>
               </select>
               {errors.gradeLevel && (
-                <p className="text-red-500 text-sm mt-1">{errors.gradeLevel}</p>
+                <p className="mt-1 text-sm text-red-500">{errors.gradeLevel}</p>
               )}
             </div>
-          </div>
 
-          {/* Contact Information with enhanced styling */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
-              Contact Number <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="tel"
-              name="contactNumber"
-              value={formData.contactNumber}
-              onChange={handleChange}
-              className="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your contact number"
-            />
-            {errors.contactNumber && (
-              <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>
-            )}
-          </div>
+            {/* Contact Number */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Contact Number
+              </label>
+              <input
+                type="tel"
+                name="contactNumber"
+                value={formData.contactNumber}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
+                placeholder="Enter your contact number"
+              />
+              {errors.contactNumber && (
+                <p className="mt-1 text-sm text-red-500">{errors.contactNumber}</p>
+              )}
+            </div>
 
-          {/* DepEd Email with enhanced styling */}
-          <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">
-              DepEd Email Address <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              name="depedEmail"
-              value={formData.depedEmail}
-              onChange={handleChange}
-              className="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="example@deped.gov.ph"
-            />
-            {errors.depedEmail && (
-              <p className="text-red-500 text-sm mt-1">{errors.depedEmail}</p>
-            )}
-          </div>
+            {/* DepEd Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                DepEd Email Address
+              </label>
+              <input
+                type="email"
+                name="depedEmail"
+                value={formData.depedEmail}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
+                placeholder="example@deped.gov.ph"
+              />
+              {errors.depedEmail && (
+                <p className="mt-1 text-sm text-red-500">{errors.depedEmail}</p>
+              )}
+            </div>
 
-          {/* Submit Button with enhanced styling */}
-          <div className="pt-6">
+            {/* Submit Button */}
             <button
               type="submit"
-              className="submit-button w-full py-4 px-6 text-white text-lg font-semibold rounded-lg"
+              className="w-full bg-[#ff6b35] text-white py-3 rounded-lg hover:bg-[#ff5722] transition-colors font-medium"
             >
-              Submit Registration
+              Register now
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
