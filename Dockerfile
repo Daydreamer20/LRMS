@@ -14,11 +14,8 @@ COPY . .
 # Build the app
 RUN npm run build
 
-# Install serve to run the built app
-RUN npm install -g serve
+# The port will be provided by Railway's environment variable
+ENV PORT=10000
 
-# Expose the port
-EXPOSE 3000
-
-# Start the app
-CMD ["serve", "-s", "build", "-l", "3000"] 
+# Start the Express server
+CMD ["npm", "run", "server"] 

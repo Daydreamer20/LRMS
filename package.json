@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject",
-    "server": "node server.js"
+    "server": "node server.js",
+    "prod": "npm run build && npm run server"
   },
   "eslintConfig": {
     "extends": [
