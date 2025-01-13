@@ -7,6 +7,7 @@ sdk: docker
 app_port: 7860
 pinned: false
 ---
+
 # Learning Resource Evaluator System
 A web application for managing DepEd Learning Resource Evaluator registrations.
 
@@ -34,8 +35,8 @@ This system allows Learning Resource Evaluators to:
 - Deployed on Hugging Face Spaces
 
 ## Access
-- Main Form: `/`
-- Admin Dashboard: `/admin` (Password: admin123)
+- Main Form: https://huggingface.co/spaces/Elly00/lre_invite
+- Admin Dashboard: https://huggingface.co/spaces/Elly00/lre_invite/admin (Password: admin123)
 
 ## Development
 1. Clone the repository

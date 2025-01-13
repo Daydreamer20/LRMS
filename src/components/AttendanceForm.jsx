@@ -274,6 +274,14 @@ function AttendanceForm() {
           </form>
         </div>
       </div>
+      <div className="mt-8 text-center">
+        <a
+          href="/admin"
+          className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+        >
+          Access Admin Dashboard
+        </a>
+      </div>
     </div>
   );
 }

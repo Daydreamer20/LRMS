@@ -1,18 +1,30 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import AttendanceForm from './components/AttendanceForm';
 import AdminDashboard from './components/AdminDashboard';
 
 function App() {
-  // Get the current path
-  const path = window.location.pathname;
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  // If we're on the admin path, render the AdminDashboard
-  if (path.includes('/admin')) {
-    return <AdminDashboard />;
-  }
+  useEffect(() => {
+    // Check if the current path includes '/admin'
+    const checkPath = () => {
+      const path = window.location.pathname;
+      setIsAdmin(path.includes('/admin'));
+    };
 
-  // Otherwise render the AttendanceForm
-  return <AttendanceForm />;
+    // Initial check
+    checkPath();
+
+    // Listen for path changes
+    window.addEventListener('popstate', checkPath);
+    return () => window.removeEventListener('popstate', checkPath);
+  }, []);
+
+  return (
+    <div className="app-container">
+      {isAdmin ? <AdminDashboard /> : <AttendanceForm />}
+    </div>
+  );
 }
 
 export default App; 
