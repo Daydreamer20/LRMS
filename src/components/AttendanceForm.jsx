@@ -93,107 +93,164 @@ function AttendanceForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-6">Event Attendance Registration</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1">Full Name:</label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-          {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg">
+        {/* Header Section */}
+        <div className="bg-blue-600 text-white rounded-t-xl p-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-center">
+            Learning Resource Evaluator Registration
+          </h2>
+          <p className="mt-2 text-center text-blue-100">
+            Please complete all required fields to register as an LRE
+          </p>
         </div>
 
-        <div>
-          <label className="block mb-1">Region and Division:</label>
-          <input
-            type="text"
-            name="regionDivision"
-            value={formData.regionDivision}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-          {errors.regionDivision && <p className="text-red-500 text-sm">{errors.regionDivision}</p>}
-        </div>
+        {/* Form Section */}
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Full Name */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Full Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your full name"
+            />
+            {errors.fullName && (
+              <p className="text-red-500 text-sm">{errors.fullName}</p>
+            )}
+          </div>
 
-        <div>
-          <label className="block mb-1">Designation:</label>
-          <input
-            type="text"
-            name="designation"
-            value={formData.designation}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-          {errors.designation && <p className="text-red-500 text-sm">{errors.designation}</p>}
-        </div>
+          {/* Region and Division */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Region and Division <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="regionDivision"
+              value={formData.regionDivision}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="e.g., Region IV-A CALABARZON"
+            />
+            {errors.regionDivision && (
+              <p className="text-red-500 text-sm">{errors.regionDivision}</p>
+            )}
+          </div>
 
-        <div>
-          <label className="block mb-1">Preferred Area of Evaluation:</label>
-          <select
-            name="evaluationArea"
-            value={formData.evaluationArea}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="">Select Area</option>
-            <option value="1">Area 1: Curriculum Compliance</option>
-            <option value="3">Area 3: Instructional Design and Organization of Materials</option>
-          </select>
-          {errors.evaluationArea && <p className="text-red-500 text-sm">{errors.evaluationArea}</p>}
-        </div>
+          {/* Designation */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Designation <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              name="designation"
+              value={formData.designation}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="e.g., Teacher III"
+            />
+            {errors.designation && (
+              <p className="text-red-500 text-sm">{errors.designation}</p>
+            )}
+          </div>
 
-        <div>
-          <label className="block mb-1">Preferred Grade Level:</label>
-          <select
-            name="gradeLevel"
-            value={formData.gradeLevel}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="">Select Grade</option>
-            <option value="5">Grade 5</option>
-            <option value="8">Grade 8</option>
-          </select>
-          {errors.gradeLevel && <p className="text-red-500 text-sm">{errors.gradeLevel}</p>}
-        </div>
+          {/* Two Column Layout for Evaluation Area and Grade Level */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Evaluation Area */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Preferred Area of Evaluation <span className="text-red-500">*</span>
+              </label>
+              <select
+                name="evaluationArea"
+                value={formData.evaluationArea}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select Area</option>
+                <option value="1">Area 1: Curriculum Compliance</option>
+                <option value="3">Area 3: Instructional Design</option>
+              </select>
+              {errors.evaluationArea && (
+                <p className="text-red-500 text-sm">{errors.evaluationArea}</p>
+              )}
+            </div>
 
-        <div>
-          <label className="block mb-1">Contact Number:</label>
-          <input
-            type="tel"
-            name="contactNumber"
-            value={formData.contactNumber}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          />
-          {errors.contactNumber && <p className="text-red-500 text-sm">{errors.contactNumber}</p>}
-        </div>
+            {/* Grade Level */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Preferred Grade Level <span className="text-red-500">*</span>
+              </label>
+              <select
+                name="gradeLevel"
+                value={formData.gradeLevel}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Select Grade</option>
+                <option value="5">Grade 5</option>
+                <option value="8">Grade 8</option>
+              </select>
+              {errors.gradeLevel && (
+                <p className="text-red-500 text-sm">{errors.gradeLevel}</p>
+              )}
+            </div>
+          </div>
 
-        <div>
-          <label className="block mb-1">DepEd Email Address:</label>
-          <input
-            type="email"
-            name="depedEmail"
-            value={formData.depedEmail}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            placeholder="example@deped.gov.ph"
-          />
-          {errors.depedEmail && <p className="text-red-500 text-sm">{errors.depedEmail}</p>}
-        </div>
+          {/* Contact Information */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Contact Number <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="tel"
+              name="contactNumber"
+              value={formData.contactNumber}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your contact number"
+            />
+            {errors.contactNumber && (
+              <p className="text-red-500 text-sm">{errors.contactNumber}</p>
+            )}
+          </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
-        >
-          Submit Registration
-        </button>
-      </form>
+          {/* DepEd Email */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              DepEd Email Address <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              name="depedEmail"
+              value={formData.depedEmail}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="example@deped.gov.ph"
+            />
+            {errors.depedEmail && (
+              <p className="text-red-500 text-sm">{errors.depedEmail}</p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-4">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+            >
+              Submit Registration
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
