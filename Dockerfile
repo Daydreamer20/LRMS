@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN node install-deps.js
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
