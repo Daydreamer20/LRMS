@@ -63,9 +63,17 @@ function AttendanceForm() {
     
     if (validateForm()) {
       try {
-        // TODO: Add API call to submit the form data
-        console.log('Form submitted:', formData);
-        // Reset form after successful submission
+        // Store in localStorage for now (temporary solution)
+        const submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+        const newSubmission = {
+          id: Date.now(),
+          ...formData,
+          submittedAt: new Date().toISOString().split('T')[0]
+        };
+        submissions.push(newSubmission);
+        localStorage.setItem('submissions', JSON.stringify(submissions));
+        
+        // Reset form
         setFormData({
           fullName: '',
           regionDivision: '',
@@ -75,8 +83,11 @@ function AttendanceForm() {
           contactNumber: '',
           depedEmail: ''
         });
+        
+        alert('Registration submitted successfully!');
       } catch (error) {
         console.error('Error submitting form:', error);
+        alert('Error submitting form. Please try again.');
       }
     }
   };

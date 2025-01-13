@@ -7,13 +7,10 @@ sdk: docker
 app_port: 7860
 pinned: false
 ---
-
-# Learning Resource Evaluator Registration System
-
-A web application for managing DepEd Learning Resource Evaluator registrations and evaluations.
+# Learning Resource Evaluator System
+A web application for managing DepEd Learning Resource Evaluator registrations.
 
 ## Overview
-
 This system allows Learning Resource Evaluators to:
 - Register for evaluation assignments
 - Select preferred evaluation areas
@@ -21,7 +18,6 @@ This system allows Learning Resource Evaluators to:
 - Provide contact and professional information
 
 ## Features
-
 - User registration for LREs including:
   - Full Name
   - Region and Division
@@ -32,14 +28,12 @@ This system allows Learning Resource Evaluators to:
   - DepEd Email Address
 
 ## Technical Details
-
 - Built with React.js
 - Styled with Tailwind CSS
 - Containerized with Docker
 - Deployed on Hugging Face Spaces
 
 ## Development
-
 1. Clone the repository
 2. Install dependencies:
 ```bash
@@ -51,5 +45,4 @@ npm run dev
 ```
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
