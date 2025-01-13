@@ -36,7 +36,10 @@ This system allows Learning Resource Evaluators to:
 
 ## Access
 - Main Form: https://huggingface.co/spaces/Elly00/lre_invite
-- Admin Dashboard: https://huggingface.co/spaces/Elly00/lre_invite/admin (Password: admin123)
+- Admin Dashboard: Add "/admin" to the main URL
+  (Password: admin123)
+
+Note: If you can't access the admin dashboard directly, use the "Access Admin Dashboard" link at the bottom of the main form.
 
 ## Development
 1. Clone the repository

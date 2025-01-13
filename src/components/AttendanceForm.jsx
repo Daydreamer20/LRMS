@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../styles/main.css';
 
-function AttendanceForm() {
+function AttendanceForm(props) {
   const [formData, setFormData] = useState({
     fullName: '',
     regionDivision: '',
@@ -98,16 +98,18 @@ function AttendanceForm() {
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-10">
-          <img 
-            src="https://i.imgur.com/kCdUi3n.png" 
-            alt="DepEd Logo" 
-            className="h-24 mx-auto mb-4"
-          />
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <div className="flex justify-center items-center gap-4 mb-6">
+            <img 
+              src="https://i.imgur.com/oCQJXSk.png" 
+              alt="DepEd Logo" 
+              className="h-12 w-auto"
+            />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
             Learning Resource Evaluator Registration
           </h2>
-          <p className="text-gray-600">
-            Please complete the form below to register as a Learning Resource Evaluator
+          <p className="text-sm text-gray-600">
+            Please complete all required fields
           </p>
         </div>
 
@@ -275,12 +277,12 @@ function AttendanceForm() {
         </div>
       </div>
       <div className="mt-8 text-center">
-        <a
-          href="/admin"
+        <button
+          onClick={props.onAdminClick}
           className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
         >
           Access Admin Dashboard
-        </a>
+        </button>
       </div>
     </div>
   );

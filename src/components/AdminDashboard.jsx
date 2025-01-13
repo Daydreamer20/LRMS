@@ -15,6 +15,11 @@ function AdminDashboard() {
     }
   };
 
+  const handleBackToForm = (e) => {
+    e.preventDefault();
+    window.location.href = window.location.origin;
+  };
+
   useEffect(() => {
     const storedSubmissions = JSON.parse(localStorage.getItem('submissions') || '[]');
     setSubmissions(storedSubmissions);
@@ -25,14 +30,18 @@ function AdminDashboard() {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto">
           {/* Header Section */}
-          <div className="text-center mb-10">
-            <img 
-              src="https://i.imgur.com/kCdUi3n.png" 
-              alt="DepEd Logo" 
-              className="h-24 mx-auto mb-4"
-            />
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h2>
-            <p className="text-gray-600">Please login to access the dashboard</p>
+          <div className="text-center mb-10 relative">
+            <div className="flex justify-center items-center gap-4 mb-6">
+              <img 
+                src="https://i.imgur.com/oCQJXSk.png" 
+                alt="DepEd Logo" 
+                className="h-12 w-auto"
+              />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Login</h2>
+            <p className="text-sm text-gray-600">
+              Enter your credentials to access the dashboard
+            </p>
           </div>
 
           {/* Login Form */}
@@ -67,14 +76,20 @@ function AdminDashboard() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-10">
-          <img 
-            src="https://i.imgur.com/kCdUi3n.png" 
-            alt="DepEd Logo" 
-            className="h-24 mx-auto mb-4"
-          />
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">LRE Registration Dashboard</h2>
-          <p className="text-gray-600">Total Submissions: {submissions.length}</p>
+        <div className="text-center mb-10 relative">
+          <div className="flex justify-center items-center gap-4 mb-6">
+            <img 
+              src="https://i.imgur.com/oCQJXSk.png" 
+              alt="DepEd Logo" 
+              className="h-12 w-auto"
+            />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Evaluation Management System
+          </h2>
+          <p className="text-sm text-gray-600">
+            BLR - Quality Assurance Division
+          </p>
         </div>
 
         {/* Table Card */}

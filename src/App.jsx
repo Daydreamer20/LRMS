@@ -6,25 +6,33 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Check if the current path includes '/admin'
+    // Check if the current URL includes 'admin'
     const checkPath = () => {
-      const path = window.location.pathname;
-      setIsAdmin(path.includes('/admin'));
+      const currentUrl = window.location.href;
+      const isAdminUrl = currentUrl.includes('admin');
+      setIsAdmin(isAdminUrl);
     };
 
     // Initial check
     checkPath();
 
-    // Listen for path changes
-    window.addEventListener('popstate', checkPath);
-    return () => window.removeEventListener('popstate', checkPath);
+    // Check for URL changes
+    const interval = setInterval(checkPath, 500);
+    return () => clearInterval(interval);
   }, []);
 
-  return (
-    <div className="app-container">
-      {isAdmin ? <AdminDashboard /> : <AttendanceForm />}
-    </div>
-  );
+  // Handle admin navigation
+  const handleAdminAccess = (e) => {
+    e.preventDefault();
+    const baseUrl = window.location.origin;
+    window.location.href = `${baseUrl}/admin`;
+  };
+
+  if (isAdmin) {
+    return <AdminDashboard />;
+  }
+
+  return <AttendanceForm onAdminClick={handleAdminAccess} />;
 }
 
 export default App; 
