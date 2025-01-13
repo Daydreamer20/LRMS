@@ -1,20 +1,28 @@
 ---
-title: Event Attendance Form
+title: LRE Invitation Form
 emoji: 📝
 colorFrom: blue
 colorTo: purple
 sdk: docker
+app_port: 7860
 pinned: false
 ---
 
-# Event Attendance Registration System
+# Learning Resource Evaluator Registration System
 
-A web application for managing DepEd event attendance and evaluations.
+A web application for managing DepEd Learning Resource Evaluator registrations and evaluations.
+
+## Overview
+
+This system allows Learning Resource Evaluators to:
+- Register for evaluation assignments
+- Select preferred evaluation areas
+- Choose grade levels for evaluation
+- Provide contact and professional information
 
 ## Features
 
-- User registration for event attendance
-- Collection of evaluator information including:
+- User registration for LREs including:
   - Full Name
   - Region and Division
   - Designation
@@ -23,28 +31,24 @@ A web application for managing DepEd event attendance and evaluations.
   - Contact Information
   - DepEd Email Address
 
-## Technical Stack
+## Technical Details
 
-- React.js
-- Tailwind CSS
-- Docker
-- Node.js
+- Built with React.js
+- Styled with Tailwind CSS
+- Containerized with Docker
+- Deployed on Hugging Face Spaces
 
-## Local Development
+## Development
 
 1. Clone the repository
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm start
-   ```
-
-## Deployment
-
-This application is deployed on Hugging Face Spaces using Docker containerization.
+```bash
+npm install
+```
+3. Start development server:
+```bash
+npm run dev
+```
 
 ## License
 
