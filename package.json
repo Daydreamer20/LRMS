@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "webpack --config webpack.config.js",
     "dev": "nodemon server.js"
   },
   "dependencies": {
