@@ -15,14 +15,8 @@ COPY . .
 # Set environment to production
 ENV NODE_ENV=production
 
-# Verify build output and contents
-RUN echo "Verifying build directory..." && \
-    ls -la && \
-    echo "Build directory contents:" && \
-    ls -la build/
-
 # Expose the port
 EXPOSE 10000
 
 # Start the server
-CMD ["npm", "run", "server"] 
+CMD ["node", "server.js"] 
