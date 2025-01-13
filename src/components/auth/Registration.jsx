@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import depedLogo from '../../assets/deped-logo.svg';
+import lrmsLogo from '../../assets/lrms-logo.svg';
 
 function Registration() {
   const navigate = useNavigate();
@@ -11,7 +13,9 @@ function Registration() {
     preferredArea: '1',
     preferredGradeLevel: '5',
     contactNumber: '',
-    depedEmail: ''
+    depedEmail: '',
+    password: '',
+    confirmPassword: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -36,9 +40,14 @@ function Registration() {
       newErrors.depedEmail = 'Must be a valid DepEd email (@deped.gov.ph)';
     }
 
-    // Validate contact number (simple validation)
+    // Validate contact number
     if (formData.contactNumber && !/^\d{11}$/.test(formData.contactNumber)) {
       newErrors.contactNumber = 'Must be a valid 11-digit phone number';
+    }
+
+    // Validate password match
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -46,11 +55,9 @@ function Registration() {
       return;
     }
 
-    // TODO: Add API call to register user
     try {
-      // Simulate API call
+      // TODO: Add API call to register user
       console.log('Registration data:', formData);
-      // Redirect to success page or login
       navigate('/registration-success');
     } catch (error) {
       setErrors({ submit: 'Registration failed. Please try again.' });
@@ -63,7 +70,6 @@ function Registration() {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -73,143 +79,178 @@ function Registration() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
-          <div className="max-w-md mx-auto">
-            <div className="flex items-center space-x-5">
-              <div className="block pl-2 font-semibold text-xl text-gray-700">
-                <h2 className="leading-relaxed">Register for LRMS</h2>
-                <p className="text-sm text-gray-500 font-normal leading-relaxed">
-                  Please fill in your information to create an account
-                </p>
-              </div>
-            </div>
-            <form className="divide-y divide-gray-200" onSubmit={handleSubmit}>
-              <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                <div className="flex flex-col">
-                  <label className="leading-loose">Full Name</label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
-                    placeholder="Enter your full name"
-                  />
-                  {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
-                </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-teal-500">
+          <div className="text-2xl font-semibold text-gray-700 mb-8 text-center">
+            Register for LRMS
+          </div>
 
-                <div className="flex flex-col">
-                  <label className="leading-loose">Region</label>
+          <div className="flex justify-center space-x-8 mb-8">
+            <img src={depedLogo} alt="DepEd Logo" className="h-16" />
+            <img src={lrmsLogo} alt="LRMS Logo" className="h-16" />
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  required
+                />
+                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Region</label>
                   <input
                     type="text"
                     name="region"
                     value={formData.region}
                     onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
-                    placeholder="Enter your region"
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    required
                   />
-                  {errors.region && <p className="text-red-500 text-sm">{errors.region}</p>}
+                  {errors.region && <p className="text-red-500 text-xs mt-1">{errors.region}</p>}
                 </div>
 
-                <div className="flex flex-col">
-                  <label className="leading-loose">Division</label>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Division</label>
                   <input
                     type="text"
                     name="division"
                     value={formData.division}
                     onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
-                    placeholder="Enter your division"
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    required
                   />
-                  {errors.division && <p className="text-red-500 text-sm">{errors.division}</p>}
+                  {errors.division && <p className="text-red-500 text-xs mt-1">{errors.division}</p>}
                 </div>
+              </div>
 
-                <div className="flex flex-col">
-                  <label className="leading-loose">Designation</label>
-                  <input
-                    type="text"
-                    name="designation"
-                    value={formData.designation}
-                    onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
-                    placeholder="Enter your designation"
-                  />
-                  {errors.designation && <p className="text-red-500 text-sm">{errors.designation}</p>}
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Designation</label>
+                <input
+                  type="text"
+                  name="designation"
+                  value={formData.designation}
+                  onChange={handleChange}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  required
+                />
+                {errors.designation && <p className="text-red-500 text-xs mt-1">{errors.designation}</p>}
+              </div>
 
-                <div className="flex flex-col">
-                  <label className="leading-loose">Preferred Area of Evaluation</label>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Preferred Area</label>
                   <select
                     name="preferredArea"
                     value={formData.preferredArea}
                     onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    required
                   >
-                    <option value="1">Area 1: Curriculum Compliance</option>
-                    <option value="3">Area 3: Instructional Design</option>
+                    <option value="1">Area 1: Curriculum</option>
+                    <option value="3">Area 3: Instructional</option>
                   </select>
-                  {errors.preferredArea && <p className="text-red-500 text-sm">{errors.preferredArea}</p>}
                 </div>
 
-                <div className="flex flex-col">
-                  <label className="leading-loose">Preferred Grade Level</label>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Grade Level</label>
                   <select
                     name="preferredGradeLevel"
                     value={formData.preferredGradeLevel}
                     onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                    required
                   >
                     <option value="5">Grade 5</option>
                     <option value="8">Grade 8</option>
                   </select>
-                  {errors.preferredGradeLevel && <p className="text-red-500 text-sm">{errors.preferredGradeLevel}</p>}
-                </div>
-
-                <div className="flex flex-col">
-                  <label className="leading-loose">Contact Number</label>
-                  <input
-                    type="text"
-                    name="contactNumber"
-                    value={formData.contactNumber}
-                    onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
-                    placeholder="Enter your 11-digit phone number"
-                  />
-                  {errors.contactNumber && <p className="text-red-500 text-sm">{errors.contactNumber}</p>}
-                </div>
-
-                <div className="flex flex-col">
-                  <label className="leading-loose">DepEd Email</label>
-                  <input
-                    type="email"
-                    name="depedEmail"
-                    value={formData.depedEmail}
-                    onChange={handleChange}
-                    className="px-4 py-2 border focus:ring-blue-500 focus:border-blue-500 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none"
-                    placeholder="Enter your DepEd email (@deped.gov.ph)"
-                  />
-                  {errors.depedEmail && <p className="text-red-500 text-sm">{errors.depedEmail}</p>}
                 </div>
               </div>
-              {errors.submit && <p className="text-red-500 text-sm text-center">{errors.submit}</p>}
-              <div className="pt-4 flex items-center space-x-4">
-                <button
-                  type="button"
-                  onClick={() => navigate('/')}
-                  className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-600"
-                >
-                  Register
-                </button>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Contact Number</label>
+                <input
+                  type="text"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  required
+                />
+                {errors.contactNumber && <p className="text-red-500 text-xs mt-1">{errors.contactNumber}</p>}
               </div>
-            </form>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">DepEd Email</label>
+                <input
+                  type="email"
+                  name="depedEmail"
+                  value={formData.depedEmail}
+                  onChange={handleChange}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  required
+                />
+                {errors.depedEmail && <p className="text-red-500 text-xs mt-1">{errors.depedEmail}</p>}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  required
+                />
+                {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+              </div>
+            </div>
+
+            {errors.submit && <p className="text-red-500 text-sm text-center mt-4">{errors.submit}</p>}
+
+            <div className="flex items-center justify-between mt-6">
+              <Link
+                to="/login"
+                className="text-sm text-teal-500 hover:text-teal-600"
+              >
+                Already have an account? Login
+              </Link>
+              <button
+                type="submit"
+                className="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-200"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+
+          <div className="mt-8 text-center text-xs text-gray-500">
+            © 2024 - All Rights Reserved
+            <div>BLR - Quality Assurance Division</div>
+            <div>Evaluation Management System</div>
           </div>
         </div>
       </div>
