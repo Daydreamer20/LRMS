@@ -11,11 +11,8 @@ RUN npm install
 # Copy project files
 COPY . .
 
-# Build the app
-RUN npm run build
-
 # The port will be provided by Railway's environment variable
 ENV PORT=10000
 
-# Start the Express server
-CMD ["npm", "run", "server"] 
+# Start the production server
+CMD ["npm", "run", "prod"] 
