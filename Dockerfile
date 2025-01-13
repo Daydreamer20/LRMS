@@ -14,6 +14,9 @@ COPY . .
 # Build the React app
 RUN npm run build
 
+# Make sure build directory exists and has correct permissions
+RUN ls -la build || echo "Build directory not found"
+
 # Expose the port
 EXPOSE 10000
 
