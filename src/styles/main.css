@@ -1,42 +1,44 @@
-/* Modern minimalist styling */
+/* Professional styling */
 body {
-  background-color: #f8fafc;
+  background-color: #f9fafb;
 }
 
-.form-input, select {
+/* Form transitions */
+.form-input, select, button {
   transition: all 0.2s ease;
 }
 
+/* Input focus effects */
 .form-input:focus, select:focus {
   outline: none;
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-/* Smooth animations */
+/* Smooth page load animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
-/* Custom scrollbar */
+/* Professional scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ff6b35;
-  border-radius: 4px;
+  background: #888;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff5722;
+  background: #666;
 } 

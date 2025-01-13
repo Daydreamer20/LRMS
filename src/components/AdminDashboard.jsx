@@ -22,36 +22,37 @@ function AdminDashboard() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto">
-          {/* Logo and Title */}
-          <div className="text-center mb-8">
-            <div className="bg-[#ff6b35] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
+          {/* Header Section */}
+          <div className="text-center mb-10">
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/2/24/Department_of_Education_%28Philippines%29.svg" 
+              alt="DepEd Logo" 
+              className="h-24 mx-auto mb-4"
+            />
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h2>
+            <p className="text-gray-600">Please login to access the dashboard</p>
           </div>
 
           {/* Login Form */}
-          <div className="bg-white rounded-2xl shadow-sm p-8">
+          <div className="bg-white rounded-lg shadow-md p-8">
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Password
+                  Password <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-[#f8fafc] border-0 rounded-lg focus:ring-2 focus:ring-[#ff6b35] transition-all"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter admin password"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#ff6b35] text-white py-3 rounded-lg hover:bg-[#ff5722] transition-colors font-medium"
+                className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium"
               >
                 Login
               </button>
@@ -63,65 +64,76 @@ function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Registrations</h2>
-          <p className="mt-2 text-gray-600">Total Submissions: {submissions.length}</p>
+        <div className="text-center mb-10">
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/2/24/Department_of_Education_%28Philippines%29.svg" 
+            alt="DepEd Logo" 
+            className="h-24 mx-auto mb-4"
+          />
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">LRE Registration Dashboard</h2>
+          <p className="text-gray-600">Total Submissions: {submissions.length}</p>
         </div>
 
         {/* Table Card */}
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-[#f8fafc]">
-                <tr>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Full Name
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Region/Division
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Designation
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Area
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Grade
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Contact
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Email
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {submissions.map((submission) => (
-                  <tr key={submission.id} className="hover:bg-[#f8fafc] transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <tr key={submission.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {submission.fullName}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {submission.regionDivision}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {submission.designation}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       Area {submission.evaluationArea}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       Grade {submission.gradeLevel}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {submission.contactNumber}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {submission.depedEmail}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {submission.submittedAt}
                     </td>
                   </tr>
