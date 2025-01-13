@@ -14,8 +14,10 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Make sure build directory exists and has correct permissions
-RUN ls -la build || echo "Build directory not found"
+# Verify build output
+RUN if [ ! -d "build" ]; then echo "Build directory is missing!" && exit 1; fi
+RUN if [ ! -f "build/index.html" ]; then echo "index.html is missing!" && exit 1; fi
+RUN echo "Build directory contents:" && ls -la build/
 
 # Expose the port
 EXPOSE 10000
