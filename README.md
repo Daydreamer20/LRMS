@@ -33,6 +33,10 @@ This system allows Learning Resource Evaluators to:
 - Containerized with Docker
 - Deployed on Hugging Face Spaces
 
+## Access
+- Main Form: `/`
+- Admin Dashboard: `/admin` (Password: admin123)
+
 ## Development
 1. Clone the repository
 2. Install dependencies:
