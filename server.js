@@ -12,9 +12,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
-const fs = require('fs');
 const https = require('https');
-const path = require('path');
 const connectDB = require('./src/config/db');
 const apiRoutes = require('./src/routes/api');
 
@@ -58,11 +56,7 @@ app.use(compression());
 // Logging configuration
 if (isProduction) {
   // Production logging
-  const accessLogStream = fs.createWriteStream(
-    path.join(__dirname, 'access.log'),
-    { flags: 'a' }
-  );
-  app.use(morgan('combined', { stream: accessLogStream }));
+  app.use(morgan('combined'));
 } else {
   // Development logging
   app.use(morgan('dev'));
@@ -83,23 +77,15 @@ app.use('/api', apiRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  
-  // Log error details in production
-  if (isProduction) {
-    const errorLog = {
-      timestamp: new Date(),
-      error: err.message,
-      stack: err.stack,
-      path: req.path,
-      method: req.method,
-      ip: req.ip
-    };
-    fs.appendFileSync(
-      path.join(__dirname, 'error.log'),
-      JSON.stringify(errorLog) + '\n'
-    );
-  }
+  // Log error details
+  console.error('Error:', {
+    timestamp: new Date().toISOString(),
+    error: err.message,
+    stack: isProduction ? undefined : err.stack,
+    path: req.path,
+    method: req.method,
+    ip: req.ip
+  });
 
   res.status(500).json({ 
     message: 'Something went wrong!',
@@ -118,26 +104,12 @@ const startServer = async () => {
     // Connect to MongoDB
     await connectDB();
     
-    // Create HTTPS server if SSL is enabled
-    if (isProduction && process.env.SSL_ENABLED === 'true') {
-      const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH, 'utf8');
-      const certificate = fs.readFileSync(process.env.SSL_CERT_PATH, 'utf8');
-      const credentials = { key: privateKey, cert: certificate };
-      
-      const httpsServer = https.createServer(credentials, app);
-      httpsServer.listen(PORT, '0.0.0.0', () => {
-        console.log(`HTTPS Server running on port ${PORT}`);
-        console.log(`Environment: ${process.env.NODE_ENV}`);
-        console.log('MongoDB connected successfully');
-      });
-    } else {
-      // Start HTTP server
-      app.listen(PORT, '0.0.0.0', () => {
-        console.log(`HTTP Server running on port ${PORT}`);
-        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-        console.log('MongoDB connected successfully');
-      });
-    }
+    // Start HTTP server
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`HTTP Server running on port ${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log('MongoDB connected successfully');
+    });
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
     // Don't exit the process, let the health check respond
@@ -147,23 +119,23 @@ const startServer = async () => {
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-  // Log error and gracefully shutdown
-  fs.appendFileSync(
-    path.join(__dirname, 'crash.log'),
-    `${new Date().toISOString()} - Uncaught Exception:\n${err.stack}\n`
-  );
+  console.error('Uncaught Exception:', {
+    timestamp: new Date().toISOString(),
+    error: err.message,
+    stack: err.stack
+  });
+  // Gracefully shutdown
   process.exit(1);
 });
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err);
-  // Log error and gracefully shutdown
-  fs.appendFileSync(
-    path.join(__dirname, 'crash.log'),
-    `${new Date().toISOString()} - Unhandled Rejection:\n${err.stack}\n`
-  );
+  console.error('Unhandled Rejection:', {
+    timestamp: new Date().toISOString(),
+    error: err.message,
+    stack: err.stack
+  });
+  // Gracefully shutdown
   process.exit(1);
 });
 

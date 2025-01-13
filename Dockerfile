@@ -13,14 +13,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm ci --only=production
 
-# Copy app source
-COPY . .
-
 # Create logs directory
 RUN mkdir -p logs
 
-# Create volume for logs
-VOLUME [ "/usr/src/app/logs" ]
+# Copy app source
+COPY . .
 
 # Expose port
 EXPOSE 8080
