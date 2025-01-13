@@ -19,7 +19,11 @@ connectDB()
   });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://your-frontend-url.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Basic route for testing
@@ -33,11 +37,7 @@ app.get('/', (req, res) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok',
-    timestamp: new Date(),
-    uptime: process.uptime()
-  });
+  res.status(200).json({ status: 'ok' });
 });
 
 // Error handling middleware
@@ -67,4 +67,6 @@ process.on('unhandledRejection', (err) => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...');
   console.log(err.name, err.message);
   process.exit(1);
-}); 
+});
+
+console.log('MONGODB_URI:', process.env.MONGODB_URI); 
