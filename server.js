@@ -11,12 +11,14 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
+// Health check endpoint (before MongoDB connection)
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // MongoDB Connection with error handling
 const startServer = async () => {
   try {
-    // Log the MongoDB URI (remove in production)
-    console.log('Attempting to connect with URI:', process.env.MONGODB_URI);
-    
     // Connect to MongoDB
     await connectDB();
     
@@ -27,17 +29,10 @@ const startServer = async () => {
     });
   } catch (error) {
     console.error('Failed to connect to MongoDB:', error);
-    process.exit(1);
+    // Don't exit the process, let the health check respond
+    console.error('Server will continue running without MongoDB connection');
   }
 };
-
-// Routes
-app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'ok',
-    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-  });
-});
 
 // Start the server
 startServer(); 
