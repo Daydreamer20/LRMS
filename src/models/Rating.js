@@ -11,11 +11,46 @@ const ratingSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  score: {
+  criteria: {
+    participation: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5
+    },
+    contribution: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5
+    },
+    expertise: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5
+    },
+    collaboration: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5
+    }
+  },
+  overallScore: {
     type: Number,
     required: true,
-    min: 0,
-    max: 100
+    min: 1,
+    max: 5,
+    default: function() {
+      if (!this.criteria) return 0;
+      const scores = Object.values(this.criteria);
+      return scores.reduce((a, b) => a + b, 0) / scores.length;
+    }
+  },
+  feedback: {
+    strengths: [String],
+    areasForImprovement: [String]
   },
   notes: {
     type: String
@@ -35,9 +70,18 @@ const ratingSchema = new mongoose.Schema({
   }
 });
 
-// Update the updatedAt timestamp on save
+// Update the updatedAt timestamp and calculate overall score on save
 ratingSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
+  if (this.criteria) {
+    const scores = [
+      this.criteria.participation,
+      this.criteria.contribution,
+      this.criteria.expertise,
+      this.criteria.collaboration
+    ];
+    this.overallScore = scores.reduce((a, b) => a + b, 0) / scores.length;
+  }
   next();
 });
 

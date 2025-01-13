@@ -1,22 +1,29 @@
-FROM node:18-alpine
+# Use Node.js LTS version
+FROM node:20-alpine
 
-# Set working directory
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install PM2 globally
+RUN npm install pm2 -g
 
 # Copy package files
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm ci --only=production
 
-# Copy the rest of the application
+# Copy app source
 COPY . .
 
-# Set environment to production
-ENV NODE_ENV=production
+# Create logs directory
+RUN mkdir -p logs
 
-# Expose the port
-EXPOSE 10000
+# Create volume for logs
+VOLUME [ "/usr/src/app/logs" ]
 
-# Start the server
-CMD ["node", "server.js"] 
+# Expose port
+EXPOSE 8080
+
+# Use PM2 to run the application
+CMD ["pm2-runtime", "ecosystem.config.js", "--env", "production"] 

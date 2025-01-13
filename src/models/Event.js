@@ -5,6 +5,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    required: true
+  },
   date: {
     type: Date,
     required: true
@@ -12,6 +16,11 @@ const eventSchema = new mongoose.Schema({
   time: {
     type: String,
     required: true
+  },
+  areaOfEvaluation: {
+    type: String,
+    required: true,
+    enum: ['Area 1', 'Area 3']
   },
   gradeLevel: {
     type: String,
@@ -36,10 +45,28 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  status: {
+    type: String,
+    enum: ['upcoming', 'ongoing', 'completed', 'cancelled'],
+    default: 'upcoming'
+  },
   participants: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    confirmationStatus: {
+      type: String,
+      enum: ['pending', 'confirmed', 'declined'],
+      default: 'pending'
+    },
+    note: String,
+    confirmedAt: Date
   }],
+  maxParticipants: {
+    type: Number,
+    required: true
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -48,7 +75,17 @@ const eventSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
+});
+
+// Update timestamp on save
+eventSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
+  next();
 });
 
 module.exports = mongoose.model('Event', eventSchema); 
