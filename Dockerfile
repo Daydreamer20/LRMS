@@ -1,7 +1,6 @@
-# Use an official Node runtime as the base image
+# Use Node.js as base
 FROM node:18
 
-# Set the working directory
 WORKDIR /app
 
 # Copy package files
@@ -16,11 +15,11 @@ COPY . .
 # Build the app
 RUN npm run build
 
-# Install serve to run the application
+# Install serve
 RUN npm install -g serve
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Expose the required port for Hugging Face Spaces
+EXPOSE 7860
 
-# Start the application
-CMD ["serve", "-s", "build", "-l", "3000"] 
+# Start the application on port 7860 (required by Hugging Face)
+CMD ["serve", "-s", "build", "-l", "7860"] 
