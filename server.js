@@ -1,23 +1,26 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const connectDB = require('./src/config/db');
 
 const app = express();
 
-// Railway sets PORT environment variable automatically
-// We'll use their PORT value if available
-const port = process.env.PORT || 10000;
-console.log('Environment PORT:', process.env.PORT);
+// Connect to MongoDB
+connectDB();
 
-// Serve static files from the React app
+// Middleware
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
+// API Routes will go here
+// TODO: Add routes for users, events, and ratings
+
+// Serve static assets in production
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+const port = process.env.PORT || 10000;
 app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on port ${port}`);
-  console.log('All environment variables:', process.env);
+  console.log(`Server running on port ${port}`);
 }); 
