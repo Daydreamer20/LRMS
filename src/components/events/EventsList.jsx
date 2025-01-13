@@ -12,35 +12,65 @@ function EventsList() {
 
   const fetchEvents = async () => {
     try {
-      // TODO: Replace with actual API call
+      setLoading(true);
+      setError(null);
       const response = await fetch('/api/events');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setEvents(data);
-      setLoading(false);
     } catch (err) {
-      setError('Failed to load events');
+      console.error('Error fetching events:', err);
+      setError('Failed to load events. Please try again later.');
+    } finally {
       setLoading(false);
     }
   };
 
   const handleJoinEvent = async (eventId) => {
     try {
-      // TODO: Replace with actual API call
-      await fetch(`/api/events/${eventId}/join`, {
+      const response = await fetch(`/api/events/${eventId}/join`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        // Add authentication token here
+        // Add authentication token here if needed
       });
-      alert('Successfully joined the event!');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      alert(data.message);
     } catch (err) {
-      alert('Failed to join event');
+      console.error('Error joining event:', err);
+      alert('Failed to join event. Please try again later.');
     }
   };
 
-  if (loading) return <div className="text-center py-8">Loading...</div>;
-  if (error) return <div className="text-center text-red-600 py-8">{error}</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <div className="text-red-600 mb-4">{error}</div>
+        <button
+          onClick={fetchEvents}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
