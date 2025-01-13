@@ -8,11 +8,14 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy project files
+# Copy the rest of the application
 COPY . .
 
 # Build the app
 RUN npm run build
+
+# Expose the port
+EXPOSE 10000
 
 # Start the production server
 CMD ["npm", "run", "server"] 
