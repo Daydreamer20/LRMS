@@ -1,90 +1,70 @@
-const http = require('http');
-const fs = require('fs');
+require('dotenv').config();
+const express = require('express');
 const path = require('path');
+const cors = require('cors');
+const connectDB = require('./src/config/db');
+const mongoose = require('mongoose');
 
-// Environment variables
+const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Basic CORS middleware
-function corsMiddleware(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-}
+// Connect to MongoDB with error handling
+connectDB()
+  .then(() => {
+    console.log('MongoDB Connected Successfully');
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
-// Create HTTP server
-const server = http.createServer((req, res) => {
-  // Handle CORS
-  corsMiddleware(req, res);
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
-  }
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-  // Health check endpoint
-  if (req.url === '/health') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ status: 'ok' }));
-    return;
-  }
-
-  // API test endpoint
-  if (req.url === '/api/test') {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Server is running' }));
-    return;
-  }
-
-  // Serve static files
-  const buildPath = path.join(__dirname, 'build');
-  let filePath = path.join(buildPath, req.url === '/' ? 'index.html' : req.url);
-
-  // Check if file exists
-  if (fs.existsSync(filePath)) {
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      filePath = path.join(filePath, 'index.html');
-    }
-
-    if (fs.existsSync(filePath)) {
-      const ext = path.extname(filePath);
-      const contentType = {
-        '.html': 'text/html',
-        '.js': 'text/javascript',
-        '.css': 'text/css',
-        '.json': 'application/json',
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.svg': 'image/svg+xml'
-      }[ext] || 'text/plain';
-
-      res.writeHead(200, { 'Content-Type': contentType });
-      fs.createReadStream(filePath).pipe(res);
-      return;
-    }
-  }
-
-  // Serve index.html for all other routes (SPA support)
-  const indexPath = path.join(buildPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.createReadStream(indexPath).pipe(res);
-  } else {
-    res.writeHead(404);
-    res.end('Not found');
-  }
+// Basic route for testing
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'LRMS API is running',
+    environment: process.env.NODE_ENV,
+    dbStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
 });
 
-// Start server
-server.listen(PORT, '0.0.0.0', () => {
-  console.log('----------------------------------------');
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok',
+    timestamp: new Date(),
+    uptime: process.uptime()
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    message: 'Something broke!',
+    error: process.env.NODE_ENV === 'development' ? err.message : 'Internal Server Error'
+  });
+});
+
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log('Directory structure:');
-  console.log('- Current directory:', __dirname);
-  console.log('- Build path:', path.join(__dirname, 'build'));
-  console.log('----------------------------------------');
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+  });
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  process.exit(1);
 }); 
