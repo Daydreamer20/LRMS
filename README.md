@@ -25,7 +25,7 @@ A web application for managing evaluation events, participant registration, and 
 - MongoDB with Mongoose
 - JWT Authentication
 - Express Validator
-- Nodemailer for email notifications
+- Node mailer for email notifications
 
 ### Security Features
 - Helmet for security headers
@@ -39,7 +39,7 @@ A web application for managing evaluation events, participant registration, and 
 
 - Node.js (v18 or higher)
 - MongoDB
-- npm or yarn package manager
+- NPM or Yarn package manager
 
 ## Installation
 
